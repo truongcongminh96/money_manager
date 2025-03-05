@@ -11,7 +11,7 @@ class ListItemCubit extends Cubit<ListItemState> {
 
   ListItemCubit(this.api) : super(ListItemState.init());
 
-  loadData(int monthIdx) async {
+  Future<void> loadData(int monthIdx) async {
     emit(
       state.copyWith(loadStatus: LoadStatus.Loading, selectedMonth: monthIdx),
     );
@@ -27,6 +27,16 @@ class ListItemCubit extends Cubit<ListItemState> {
       emit(
         state.copyWith(transactions: transactions, loadStatus: LoadStatus.Done),
       );
+    } catch (ex) {
+      emit(state.copyWith(loadStatus: LoadStatus.Error));
+    }
+  }
+
+  Future<void> deleteItem(String dateTime) async {
+    emit(state.copyWith(loadStatus: LoadStatus.Loading));
+    try {
+      await api.deleteTransaction(dateTime);
+      await loadData(state.selectedMonth);
     } catch (ex) {
       emit(state.copyWith(loadStatus: LoadStatus.Error));
     }

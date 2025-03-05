@@ -58,32 +58,66 @@ class ListItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ListItemCubit, ListItemState>(
       builder: (context, state) {
+        var cubit = context.read<ListItemCubit>();
         return Column(
           children: [
-            Row(
-              children: [
-                Expanded(child: Text(state.total.toString())),
-                state.months.isNotEmpty &&
-                        state.selectedMonth >= 0 &&
-                        state.selectedMonth.bitLength < state.months.length
-                    ? Text(state.months[state.selectedMonth])
-                    : Container(),
-              ],
+            Container(
+              padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
+              child: Row(
+                children: [
+                  Expanded(child: Text(state.total.toString())),
+                  state.months.isNotEmpty &&
+                          state.selectedMonth == 0 &&
+                          state.selectedMonth < state.months.length
+                      ? Container()
+                      : IconButton(
+                        onPressed: () {
+                          cubit.loadData(state.selectedMonth - 1);
+                        },
+                        icon: Icon(Icons.navigate_before),
+                      ),
+                  state.months.isNotEmpty &&
+                          state.selectedMonth >= 0 &&
+                          state.selectedMonth < state.months.length
+                      ? Text(state.months[state.selectedMonth].substring(0, 7))
+                      : Container(),
+                  state.months.isNotEmpty &&
+                          state.selectedMonth >= 0 &&
+                          state.selectedMonth == state.months.length - 1
+                      ? Container()
+                      : IconButton(
+                        onPressed: () {
+                          cubit.loadData(state.selectedMonth + 1);
+                        },
+                        icon: Icon(Icons.navigate_next),
+                      ),
+                ],
+              ),
             ),
             Expanded(
               child: ListView.builder(
                 itemBuilder: (context, index) {
+                  var item = state.transactions[index];
                   return Card(
+                    margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
                     child: ListTile(
+                      leading:
+                          item.amount >= 0
+                              ? Icon(Icons.add, color: Colors.blue)
+                              : Icon(Icons.remove, color: Colors.red),
                       title: Row(
                         children: [
-                          Expanded(
-                            child: Text(state.transactions[index].title),
-                          ),
-                          Text(state.transactions[index].amount.toString()),
+                          Expanded(child: Text(item.title)),
+                          Text(item.amount.toString()),
                         ],
                       ),
-                      subtitle: Text(state.transactions[index].content),
+                      subtitle: Text(item.content),
+                      trailing: IconButton(
+                        onPressed: () {
+                          cubit.deleteItem(item.dateTime);
+                        },
+                        icon: Icon(Icons.delete),
+                      ),
                     ),
                   );
                 },
