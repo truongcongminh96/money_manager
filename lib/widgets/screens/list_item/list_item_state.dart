@@ -51,8 +51,8 @@ final class ListItemState {
   @override
   String toString() {
     return 'ListItemState{' +
-        ' transactions: $transactions,' +
-        ' months: $months,' +
+        ' trans length: ${transactions.length},' +
+        ' months length: ${months.length},' +
         ' selectedIdx: $selectedIdx,' +
         ' selectedMonth: $selectedMonth,' +
         ' total: $total,' +

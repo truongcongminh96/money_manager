@@ -9,12 +9,65 @@ import 'package:money_manager/routes.dart';
 import 'package:money_manager/widgets/screens/login/login_screen.dart';
 
 void main() {
-  runApp(
-    RepositoryProvider<Log>(
-      create: (context) => LogImplement(),
-      child: Repository(),
-    ),
-  );
+  Log log = LogImplement();
+  Bloc.observer = AppBlocObserver(log);
+  runApp(RepositoryProvider<Log>.value(value: log, child: Repository()));
+}
+
+/// {@template app_bloc_observer}
+/// Custom [BlocObserver] that observes all bloc and cubit state changes.
+/// {@endtemplate}
+class AppBlocObserver extends BlocObserver {
+  final Log log;
+  static const String TAG = "Bloc";
+
+  /// {@macro app_bloc_observer}
+  const AppBlocObserver(this.log);
+
+  @override
+  void onCreate(BlocBase bloc) {
+    super.onCreate(bloc);
+    log.infor(TAG, 'onCreate : ${bloc.runtimeType}');
+  }
+
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    super.onEvent(bloc, event);
+    log.infor(TAG, 'onEvent: ${bloc.runtimeType}, event: $event');
+  }
+
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    super.onChange(bloc, change);
+    log.infor(
+      TAG,
+      'onChange: ${bloc.runtimeType}, change: ${change.nextState}',
+    );
+  }
+
+  @override
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
+    super.onTransition(bloc, transition);
+    log.infor(
+      TAG,
+      'onTransition: ${bloc.runtimeType}, transition: $transition',
+    );
+  }
+
+  @override
+  void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
+    super.onError(bloc, error, stackTrace);
+    log.infor(TAG, 'onError: ${bloc.runtimeType}, error: $error');
+  }
+
+  @override
+  void onClose(BlocBase bloc) {
+    super.onClose(bloc);
+    log.infor(TAG, 'onClose: ${bloc.runtimeType}');
+  }
 }
 
 class Repository extends StatelessWidget {
