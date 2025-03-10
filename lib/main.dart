@@ -97,10 +97,17 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        onGenerateRoute: mainRoute,
-        initialRoute: LoginScreen.route,
+      child: BlocBuilder<MainCubit, MainState>(
+        builder: (context, state) {
+          return MaterialApp(
+            darkTheme: ThemeData.dark(),
+            theme: ThemeData.light(),
+            themeMode: state.isLightTheme ? ThemeMode.light : ThemeMode.dark,
+            debugShowCheckedModeBanner: false,
+            onGenerateRoute: mainRoute,
+            initialRoute: LoginScreen.route,
+          );
+        },
       ),
     );
   }

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/common/enum/drawer_item.dart';
 import 'package:money_manager/main_cubit.dart';
 
+import '../list_item/list_item_screen.dart';
+
 class MenuScreen extends StatelessWidget {
   static const String route = "MenuScreen";
 
@@ -34,6 +36,9 @@ class Page extends StatelessWidget {
                         : null,
                 onTap: () {
                   context.read<MainCubit>().setSelected(DrawerItem.Home);
+                  Navigator.of(
+                    context,
+                  ).popUntil(ModalRoute.withName(ListItemScreen.route));
                 },
               ),
               ListTile(
@@ -44,6 +49,9 @@ class Page extends StatelessWidget {
                         : null,
                 onTap: () {
                   context.read<MainCubit>().setSelected(DrawerItem.Setting);
+                  Navigator.of(
+                    context,
+                  ).popUntil(ModalRoute.withName(ListItemScreen.route));
                 },
               ),
             ],

@@ -5,7 +5,7 @@ final class MainState {
   final DrawerItem selected;
 
   const MainState.int({
-    this.isLightTheme = false,
+    this.isLightTheme = true,
     this.selected = DrawerItem.Home,
   });
 
