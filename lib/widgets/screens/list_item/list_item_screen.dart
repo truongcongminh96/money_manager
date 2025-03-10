@@ -151,6 +151,15 @@ class ListItemPage extends StatelessWidget {
                         },
                         icon: Icon(Icons.delete),
                       ),
+                      onTap: () {
+                        cubit.setSelectedIdx(index);
+                        if (state.screenSize == ScreenSize.Small) {
+                          Navigator.of(context).pushNamed(
+                            DetailScreen.route,
+                            arguments: {'cubit': cubit},
+                          );
+                        }
+                      },
                     ),
                   );
                 },

@@ -46,4 +46,8 @@ class ListItemCubit extends Cubit<ListItemState> {
   void setScreenSize(ScreenSize screenSize) {
     emit(state.copyWith(screenSize: screenSize));
   }
+
+  void setSelectedIdx(int selectedIdx) {
+    emit(state.copyWith(selectedIdx: selectedIdx));
+  }
 }
