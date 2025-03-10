@@ -11,7 +11,10 @@ Route<dynamic>? mainRoute(RouteSettings settings) {
     case LoginScreen.route:
       return MaterialPageRoute(builder: (context) => LoginScreen());
     case ListItemScreen.route:
-      return MaterialPageRoute(builder: (context) => ListItemScreen());
+      return MaterialPageRoute(
+        builder: (context) => ListItemScreen(),
+        settings: RouteSettings(name: ListItemScreen.route),
+      );
     case DetailScreen.route:
       var cubit =
           (settings.arguments as Map<String, dynamic>)['cubit']
@@ -27,7 +30,18 @@ Route<dynamic>? mainRoute(RouteSettings settings) {
             ),
       );
     case AddEditScreen.route:
-      return MaterialPageRoute(builder: (context) => AddEditScreen());
+      var cubit =
+          (settings.arguments as Map<String, dynamic>)['cubit']
+              as ListItemCubit;
+      var isAddMode =
+          (settings.arguments as Map<String, dynamic>)['isAddMode'] as bool;
+      return MaterialPageRoute(
+        builder:
+            (context) => BlocProvider.value(
+              value: cubit,
+              child: AddEditScreen(isAddMode, cubit.state.screenSize),
+            ),
+      );
     default:
       return MaterialPageRoute(builder: (context) => LoginScreen());
   }

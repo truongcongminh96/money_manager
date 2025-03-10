@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:money_manager/widgets/screens/add_edit/add_edit_screen.dart';
 import 'package:money_manager/widgets/screens/list_item/list_item_cubit.dart';
 
 class DetailScreen extends StatelessWidget {
@@ -40,7 +41,16 @@ class Page extends StatelessWidget {
                   SizedBox(height: 16),
                   Text(state.transactions[state.selectedIdx].amount.toString()),
                   SizedBox(height: 16),
-                  ElevatedButton(onPressed: () {}, child: Text("Edit")),
+                  ElevatedButton(
+                    onPressed: () {
+                      var cubit = context.read<ListItemCubit>();
+                      Navigator.of(context).pushNamed(
+                        AddEditScreen.route,
+                        arguments: {'cubit': cubit, 'isAddMode': false},
+                      );
+                    },
+                    child: Text("Edit"),
+                  ),
                 ],
               ),
             );

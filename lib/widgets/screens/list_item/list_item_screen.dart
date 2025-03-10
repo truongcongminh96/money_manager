@@ -12,6 +12,7 @@ import 'package:money_manager/widgets/screens/menu/menu_screen.dart';
 import 'package:money_manager/widgets/screens/setting/setting_screen.dart';
 
 import '../../common_widgets/notification_bar.dart';
+import '../add_edit/add_edit_screen.dart';
 
 class ListItemScreen extends StatelessWidget {
   static const String route = "ListItemScreen";
@@ -41,6 +42,16 @@ class Page extends StatelessWidget {
               state.screenSize == ScreenSize.Large
                   ? null
                   : Drawer(child: MenuScreen()),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            onPressed: () {
+              var cubit = context.read<ListItemCubit>();
+              Navigator.of(context).pushNamed(
+                AddEditScreen.route,
+                arguments: {'cubit': cubit, 'isAddMode': true},
+              );
+            },
+          ),
         );
       },
     );

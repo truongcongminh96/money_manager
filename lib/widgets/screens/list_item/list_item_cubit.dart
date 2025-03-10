@@ -43,6 +43,26 @@ class ListItemCubit extends Cubit<ListItemState> {
     }
   }
 
+  Future<void> addItem(Transaction transaction) async {
+    emit(state.copyWith(loadStatus: LoadStatus.Loading));
+    try {
+      await api.addTransaction(transaction);
+      await loadData(state.selectedMonth);
+    } catch (ex) {
+      emit(state.copyWith(loadStatus: LoadStatus.Error));
+    }
+  }
+
+  Future<void> editItem(Transaction transaction) async {
+    emit(state.copyWith(loadStatus: LoadStatus.Loading));
+    try {
+      await api.addTransaction(transaction);
+      await loadData(state.selectedMonth);
+    } catch (ex) {
+      emit(state.copyWith(loadStatus: LoadStatus.Error));
+    }
+  }
+
   void setScreenSize(ScreenSize screenSize) {
     emit(state.copyWith(screenSize: screenSize));
   }
