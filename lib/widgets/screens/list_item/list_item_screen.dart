@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:money_manager/common/enum/load_status.dart';
+import 'package:money_manager/common/enum/screen_size.dart';
+import 'package:money_manager/common/utils.dart';
 import 'package:money_manager/repositories/api.dart';
+import 'package:money_manager/widgets/screens/detail/detail_screen.dart';
 import 'package:money_manager/widgets/screens/list_item/list_item_cubit.dart';
+import 'package:money_manager/widgets/screens/menu/menu_screen.dart';
 
 import '../../common_widgets/notification_bar.dart';
 
@@ -43,9 +47,15 @@ class Body extends StatelessWidget {
         }
       },
       builder: (context, state) {
+        var screenSize = calculateScreenSize(MediaQuery.sizeOf(context).width);
+        context.read<ListItemCubit>().setScreenSize(screenSize);
         return state.loadStatus == LoadStatus.Loading
             ? Center(child: CircularProgressIndicator())
-            : ListItemPage();
+            : switch (state.screenSize) {
+              ScreenSize.Small => ListItemPage(),
+              ScreenSize.Medium => ListItemEditPage(),
+              _ => ListItemEditMenuPage(),
+            };
       },
     );
   }
@@ -127,6 +137,35 @@ class ListItemPage extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class ListItemEditPage extends StatelessWidget {
+  const ListItemEditPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: ListItemPage()),
+        Expanded(child: DetailScreen()),
+      ],
+    );
+  }
+}
+
+class ListItemEditMenuPage extends StatelessWidget {
+  const ListItemEditMenuPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(child: MenuScreen()),
+        Expanded(child: ListItemPage()),
+        Expanded(child: DetailScreen()),
+      ],
     );
   }
 }
