@@ -56,7 +56,7 @@ class ListItemCubit extends Cubit<ListItemState> {
   Future<void> editItem(Transaction transaction) async {
     emit(state.copyWith(loadStatus: LoadStatus.Loading));
     try {
-      await api.addTransaction(transaction);
+      await api.editTransaction(transaction);
       await loadData(state.selectedMonth);
     } catch (ex) {
       emit(state.copyWith(loadStatus: LoadStatus.Error));

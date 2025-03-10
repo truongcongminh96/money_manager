@@ -60,7 +60,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                           amount: double.parse(amount.text),
                         ),
                       );
-                      pop(context);
+                      Navigator.of(
+                        context,
+                      ).popUntil(ModalRoute.withName(ListItemScreen.route));
                     } else {
                       cubit.addItem(
                         Transaction(
