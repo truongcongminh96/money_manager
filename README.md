@@ -1,18 +1,63 @@
-# money_manager
 
-A new Flutter project.
+# 💰 Flutter Money Manager
 
-Money Manager is a mobile application that helps users easily track their income, expenses, and plan their personal finances. The app is built with Flutter and utilizes the Bloc Pattern for state management, optimizing performance and ensuring a clear, maintainable architecture.
+A simple Flutter app to manage personal transactions, built as an example to demonstrate the **Cubit / Bloc pattern** in Flutter.
 
-## Getting Started
+## 🎯 Purpose
 
-This project is a starting point for a Flutter application.
+This project was created to:
 
-A few resources to get you started if this is your first Flutter project:
+- Practice the **Bloc architecture** using `Cubit`
+- Apply **clean and modular folder structure**
+- Demonstrate working with local transaction data (create, display)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🧱 Project Structure
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```
+lib/
+├── common/              # Enums and utilities
+├── models/              # Data models (e.g. Transaction)
+├── repositories/        # Simulated API/data layers
+├── widgets/             # UI widgets and Cubit logic
+└── main.dart            # App entry point
+```
+
+## 🧪 Features
+
+- 📋 Add and view transaction entries
+- 🧠 Manage state using `Cubit` from `flutter_bloc`
+- 🧰 Includes `.toMap()` / `.fromMap()` methods for model conversion
+- 🗂 Organized using clean architecture principles
+
+## 🛠️ Technologies Used
+
+- ✅ Flutter (3.29 stable)
+- ✅ Dart
+- ✅ flutter_bloc (Cubit)
+- ✅ VS Code or Android Studio
+
+## 🚀 Getting Started
+
+```bash
+flutter pub get
+flutter run
+```
+
+## 📸 Screenshots
+
+> You can add UI screenshots here later for better visualization.
+
+## 📦 Suggestions for Improvement
+
+- Add persistent storage (e.g. Hive or Firebase)
+- Add edit/delete functionality for transactions
+- Improve UI design with animations or custom themes
+
+## 👨‍💻 Author
+
+- Name: **Truong Cong Minh**
+- Purpose: Built for practicing Flutter + Bloc and sharing with the developer community.
+
+## 📄 License
+
+This project is licensed under the MIT License.
